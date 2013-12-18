@@ -57,6 +57,20 @@ public:
 		root->l=rootLR;
 		if(rootLR) rootLR->p=root;
 	}
+	void DeleteNode(LPNODE lpNode)
+	{
+		//以要删除的节点为轴，旋转直到这个节点变为叶节点。然后直接删掉即可。
+		if(lpNode==NULL) return;
+		while(lpNode->r)
+		{
+			leftRotate(lpNode);
+		}
+		while(lpNode->l)
+		{
+			rightRotate(lpNode);
+		}
+		CBST::DeleteNode(lpNode);
+	}
 	bool Insert(const T& element)
 	{
 		LPNODE lpNewNode=NULL;
