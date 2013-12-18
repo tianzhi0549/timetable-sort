@@ -19,8 +19,19 @@ public:
 		_Node* r;
 		T element;
 	}Node,*LPNODE;
-private:
+	int GetHeight()
+	{
+		return GetHeightR(pRoot);
+	}
+protected:
 	LPNODE pRoot;
+	int GetHeightR(LPNODE root)
+	{
+		if(root==NULL) return 0;
+		int lHeight=GetHeightR(root->l);
+		int rHeight=GetHeightR(root->r);
+		return (rHeight>lHeight?rHeight:lHeight)+1;
+	}
 	LPNODE GetSuccessor(LPNODE lpNode)
 	{
 		if(lpNode->r==NULL) return NULL;
@@ -75,9 +86,10 @@ public:
 	{
 		InOrderTravelR(pRoot,pf);
 	}
-	bool Insert(const T& element)
+	bool Insert(const T& element,LPNODE* ppNode)
 	{
 		LPNODE lpNewNode=new Node(element,0,0,0);
+		*ppNode=lpNewNode;
 		if(!lpNewNode) return false;
 		if(!pRoot)
 		{
